@@ -1,30 +1,29 @@
 package com.zosh.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class IngredientsItem {
+public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
+    private User customer;
 
-    @ManyToOne
-    private IngredientCategory category;
+    private Long total;
 
-    @JsonIgnore
-    @ManyToOne
-    private Restaurant restaurant;
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> item = new ArrayList<>();
 
-    private boolean inStock=true;
 
 }
